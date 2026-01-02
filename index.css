@@ -17,6 +17,11 @@
       radial-gradient(at 100% 0%, rgba(30, 41, 59, 0.1) 0px, transparent 50%);
   }
 
+  /* Improved focus visibility for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-zinc-950;
+  }
+
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
@@ -65,6 +70,26 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes entrance-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -73,6 +98,10 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+.animate-entrance {
+  animation: entrance-slide-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .glow-blue {

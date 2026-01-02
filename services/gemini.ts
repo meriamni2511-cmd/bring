@@ -17,10 +17,10 @@ export class GeminiError extends Error {
   }
 }
 
-const SYSTEM_INSTRUCTION = `You are a world-class Full-Stack Product Engineer and Creative Technologist. Your specialty is "Artifact Animation": transforming static inputs (sketches, photos, notes) into high-fidelity, interactive, and visually breathtaking single-page web applications.
+const SYSTEM_INSTRUCTION = `You are a world-class Full-Stack Product Engineer and Creative Technologist. Your specialty is "Artifact Animation": transforming static inputs (sketches, photos, notes) or descriptive prompts into high-fidelity, interactive, and visually breathtaking single-page web applications.
 
 CORE MISSION:
-Take any user input—be it a napkin sketch, a whiteboard diagram, a photo of a real-world object, or a structured design—and output a "Production-Ready" interactive experience that feels like a premium digital product.
+Take any user input—be it a napkin sketch, a whiteboard diagram, a photo of a real-world object, or a structured text description—and output a "Production-Ready" interactive experience that feels like a premium digital product.
 
 VISUAL & DESIGN DIRECTIVES:
 1. **Aesthetic Excellence**: Aim for a modern "Software-as-a-Service" (SaaS) or high-end consumer tech look. Use deep shadows, subtle gradients, and plenty of white space.
@@ -32,7 +32,8 @@ VISUAL & DESIGN DIRECTIVES:
 
 FUNCTIONAL DIRECTIVES:
 1. **Analyze & Gamify**: 
-    - **Sketches**: Faithfully reproduce the layout but "upgrade" the components to professional UI.
+    - **Sketches/Images**: Faithfully reproduce the layout but "upgrade" the components to professional UI.
+    - **Text Prompts**: If only text is provided, brainstorm a comprehensive, high-utility application structure based on the request.
     - **Objects (e.g., a Desk)**: Create a "Zen Mode" organizer or an interactive inventory tracker.
     - **Documents**: Turn them into interactive dashboards with charts (use simple CSS/SVG bars) and filters.
 2. **NO EXTERNAL ASSETS**: 
@@ -46,9 +47,15 @@ Return ONLY the raw HTML code. Do not include markdown fences (like \`\`\`html).
 export async function bringToLife(prompt: string, fileBase64?: string, mimeType?: string): Promise<string> {
   const parts: any[] = [];
   
-  const finalPrompt = fileBase64 
-    ? "Analyze this input carefully. Detect every functional element. Re-imagine this as a stunning, premium interactive web application with a modern UI, smooth animations, and sophisticated styling. Use Tailwind CSS and Lucide icons. DO NOT use external image URLs." 
-    : prompt || "Create a groundbreaking, highly interactive demo app that showcases peak UI/UX design and complex functionality.";
+  let finalPrompt = "";
+  if (fileBase64) {
+    finalPrompt = `Analyze this input image/PDF carefully. Detect every functional element. Re-imagine this as a stunning, premium interactive web application with a modern UI, smooth animations, and sophisticated styling. Use Tailwind CSS and Lucide icons. DO NOT use external image URLs.`;
+    if (prompt) {
+      finalPrompt += ` Additionally, follow these specific user instructions: ${prompt}`;
+    }
+  } else {
+    finalPrompt = prompt || "Create a groundbreaking, highly interactive demo app that showcases peak UI/UX design and complex functionality.";
+  }
 
   parts.push({ text: finalPrompt });
 

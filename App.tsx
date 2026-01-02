@@ -182,7 +182,7 @@ const App: React.FC = () => {
   return (
     <div className="h-[100dvh] bg-zinc-950 bg-dot-grid text-zinc-50 selection:bg-blue-500/30 overflow-y-auto overflow-x-hidden relative flex flex-col scroll-smooth">
       
-      <div 
+      <main 
         className={`
           min-h-full flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10 
           transition-all duration-1000 cubic-bezier(0.2, 0.8, 0.2, 1)
@@ -201,7 +201,7 @@ const App: React.FC = () => {
           </div>
         </div>
         
-        <div className="flex-shrink-0 pb-12 w-full mt-auto flex flex-col items-center gap-12">
+        <footer className="flex-shrink-0 pb-12 w-full mt-auto flex flex-col items-center gap-12">
             <div className="w-full">
                 <CreationHistory history={history} onSelect={handleSelectCreation} />
             </div>
@@ -210,13 +210,14 @@ const App: React.FC = () => {
               href="https://x.com/ammaar" 
               target="_blank" 
               rel="noopener noreferrer"
+              aria-label="View creator Ammaar's profile on X"
               className="group flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-all duration-500"
             >
-              <span className="text-zinc-600 group-hover:text-blue-400 text-[10px] font-mono tracking-widest uppercase transition-colors">Digital Crafting Engine</span>
+              <span className="text-zinc-600 group-hover:text-blue-400 text-[10px] font-mono tracking-widest uppercase transition-colors" aria-hidden="true">Digital Crafting Engine</span>
               <span className="text-zinc-500 group-hover:text-zinc-200 text-xs font-bold transition-colors">Created by @ammaar</span>
             </a>
-        </div>
-      </div>
+        </footer>
+      </main>
 
       <LivePreview
         creation={activeCreation}
@@ -229,11 +230,12 @@ const App: React.FC = () => {
       <div className={`fixed bottom-6 right-6 z-50 transition-all duration-700 ${isFocused ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100'}`}>
         <button 
             onClick={handleImportClick}
-            className="group flex items-center space-x-3 p-3 px-4 bg-zinc-900/50 backdrop-blur-md border border-zinc-800 rounded-full hover:bg-zinc-800 hover:border-zinc-600 transition-all duration-300 shadow-2xl"
+            aria-label="Import and restore a previously exported artifact session"
+            className="group flex items-center space-x-3 p-3 px-4 bg-zinc-900/50 backdrop-blur-md border border-zinc-800 rounded-full hover:bg-zinc-800 hover:border-zinc-600 transition-all duration-300 shadow-2xl focus-visible:ring-2 focus-visible:ring-blue-500"
             title="Import Artifact"
         >
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 group-hover:text-zinc-200 hidden sm:inline">Restore Session</span>
-            <ArrowUpTrayIcon className="w-4 h-4 text-zinc-400 group-hover:text-blue-400" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 group-hover:text-zinc-200 hidden sm:inline" aria-hidden="true">Restore Session</span>
+            <ArrowUpTrayIcon className="w-4 h-4 text-zinc-400 group-hover:text-blue-400" aria-hidden="true" />
         </button>
         <input 
             type="file" 
@@ -241,6 +243,7 @@ const App: React.FC = () => {
             onChange={handleImportFile} 
             accept=".json" 
             className="hidden" 
+            aria-hidden="true"
         />
       </div>
     </div>
